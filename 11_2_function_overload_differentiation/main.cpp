@@ -1,15 +1,26 @@
-// This is a sample program intended to demonstrate the workings of function
-// overloading.
+/**
+ * @file main.cpp
+ * @author Daniel Even
+ * @brief This is a sample program demonstrating the workings of function
+ * overloading. This includes examples for differentiation based on parameter
+ * type, number of parameters, and const/volatile qualifiers for member
+ * functions. It also demonstrates that the ellipsis is treated as a separate
+ * argument type and can be used alongside overloaded functions.
+ * 
+ * Mangling as a Mechanism: The compiler uses a technique called "name mangling"
+ * in order to differentiate these functions. The function name is modified 
+ * based on the number of parameters and parameter types to create a truly 
+ * unique name. Naming conventions are not standardzied and will vary between 
+ * compilers.
+ */
 #include <iostream>
 #include <cstdarg>
 #include "OverloadClass.hpp"
 
-// Uncomment the desired function to force the compiler to differentiate
-// function types based on each function property.
-#define NUM_OF_PARAMS_EXAMPLE
-#define TYPE_OF_PARAMS_EXAMPLE
+// Uncomment this to demonstrate how functions cannot be overloaded based on
+// return type.
 // #define RETURN_TYPE_EXAMPLE
-#define ELLIPSIS_EXAMPLE
+
 
 //==============================================================================
 // Function Declarations
@@ -19,21 +30,18 @@
  */
 int add(int num1, int num2);
 
-#ifdef NUM_OF_PARAMS_EXAMPLE
 /**
  * @brief A trivial function to force the compiler to overload based on the
  * number of parameters used.
  */
 int add(int num1, int num2, int num3);
-#endif
 
-#ifdef TYPE_OF_PARAMS_EXAMPLE
 /**
  * @brief A trivial function to force the compiler to overload based on the
  * type of parameters used.
  */
 float add(float num1, float num2);
-#endif
+
 
 #ifdef RETURN_TYPE_EXAMPLE
 /**
@@ -43,13 +51,12 @@ float add(float num1, float num2);
 float add(int num1, int num2);
 #endif
 
-#ifdef ELLIPSIS_EXAMPLE
 /**
  * @brief This demonstrates the compilers ability to differentiate ellipses from
  * standard parameters
  */
 int add(int num1, ...);
-#endif
+
 
 //==============================================================================
 // Function Definitions
@@ -60,21 +67,17 @@ int add(int num1, int num2)
     return num1 + num2;
 }
 
-#ifdef NUM_OF_PARAMS_EXAMPLE
 int add(int num1, int num2, int num3)
 {
     std::cout << "Second add version called! (Overloaded based on number of parameters)" << std::endl;
     return num1 + num2 + num3;
 }
-#endif
 
-#ifdef TYPE_OF_PARAMS_EXAMPLE
 float add(float num1, float num2)
 {
     std::cout << "Third add version called! (Overloaded based on type of parameters)" << std::endl;
     return num1 + num2;
 }
-#endif
 
 #ifdef RETURN_TYPE_EXAMPLE
 float add(int num1, int num2)
@@ -84,7 +87,6 @@ float add(int num1, int num2)
 }
 #endif
 
-#ifdef ELLIPSIS_EXAMPLE
 int add(int count, ...)
 {
     std::cout << "Fifth add version called! (The variable argument list type)" << std::endl;
@@ -101,7 +103,6 @@ int add(int count, ...)
 
     return sum;
 }
-#endif
 
 int main() {
     // Demonstrate the initial 3 examples
