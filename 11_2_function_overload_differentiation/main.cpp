@@ -7,11 +7,43 @@
  * functions. It also demonstrates that the ellipsis is treated as a separate
  * argument type and can be used alongside overloaded functions.
  * 
+ * Topics:
+ * 
  * Mangling as a Mechanism: The compiler uses a technique called "name mangling"
  * in order to differentiate these functions. The function name is modified 
  * based on the number of parameters and parameter types to create a truly 
  * unique name. Naming conventions are not standardzied and will vary between 
  * compilers.
+ * 
+ * Overload Resolution: This is the name for the process of matching a function
+ * call to the (correct) overloaded definition. This is usually very simple but 
+ * can become complex when type conversion is considered.
+ * 
+ * 1) Check for an exact match. Trivial conversion such as qualification 
+ * conversions (int -> const int), non-reference to reference, and l-value to
+ * r-value conversions are considered exact matches. If multiple exact matches
+ * are found then an ambiguous match error is thrown by the compiler.
+ * 
+ * 2) If step 1 failed, then the compiler will attempt numeric promotion of the
+ * parameters. This includes widening types from uint16_t to uint32_t, or float
+ * to double, for example. This is the point at which a integer parametered
+ * function called with characters would be resolved as the char is promoted to
+ * integer.
+ * 
+ * 3) If step 2 fails, then the compiler will begin to attempt matching via
+ * numeric conversion. This is the point at which a float parametered
+ * function called with characters would be resolved as the char is converted to
+ * float.
+ * 
+ * 4) If step 3 fails, then the compiler will attempt to apply user-defined
+ * conversions. Classes that have overloaded a conversion operator fall into 
+ * this category. The constructor of a class is also considere a user defined
+ * conversion, interestingly.
+ * 
+ * 5) If step 4 fails, then function signatures using the ellipsis will be 
+ * considered.
+ * 
+ * 6) There is no resolution and a compiler error will be issued.
  */
 #include <iostream>
 #include <cstdarg>
@@ -118,6 +150,12 @@ int main() {
 
     // This should call the variable argument list version
     sol = add(5, 1, 2, 3, 4, 5);
+
+    // Here is an interesting case. What happens when we use a set of parameters
+    // that are not explicitly listed in any overload? Lets use characters. 
+    // These could be cast to either int or float, but which should the compiler
+    // choose?
+    sol = add('c', 'd');
 
 
     // Demonstrate how member functions of a class can be overloaded based on 
