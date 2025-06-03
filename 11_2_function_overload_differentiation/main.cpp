@@ -1,6 +1,7 @@
 // This is a sample program intended to demonstrate the workings of function
 // overloading.
 #include <iostream>
+#include "OverloadClass.hpp"
 
 // Uncomment the desired function to force the compiler to differentiate
 // function types based on each function property.
@@ -41,12 +42,6 @@ float add(float num1, float num2);
 float add(int num1, int num2);
 #endif
 
-#ifdef CONST_EXAMPLE
-
-
-#endif
-
-
 //==============================================================================
 // Function Definitions
 //==============================================================================
@@ -81,8 +76,23 @@ float add(int num1, int num2)
 #endif
 
 int main() {
+    // Demonstrate the initial 3 examples
     int sol = add(1, 2);
     sol = add(1, 2, 3);
-
     float float_solution = add(1.0f, 2.0f);
+
+    // Demonstrate how member functions of a class can be overloaded based on 
+    // const or volatile qualifiers.
+
+    // Create a non-const object.
+    OverloadClass overload_class; 
+
+    // Check the logs to see which version of this function was called.
+    (void)overload_class.get_number(); 
+
+    // Lets create a const version of the same class now.                               
+    const OverloadClass overload_class_const;
+
+    // Check the logs to see which version of this function was called.
+    (void)overload_class_const.get_number(); 
 }
