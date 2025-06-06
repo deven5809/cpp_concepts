@@ -9,8 +9,8 @@ project(cpp_concepts
 set(CMAKE_CXX_STANDARD 23)
 
 # Build Arguments
-# cmake -DMY_VARIABLE:STRING=option_value2
-SET(BUILD_VARIANT "all" CACHE STRING "Defines which examples to build")
+# cmake -DBUILD_VARIANT:STRING=all
+SET(BUILD_VARIANT "11_2" CACHE STRING "Defines which examples to build")
 
 # Define all possible/supported builds.
 set(SUPPORTED_VARIANTS
@@ -19,7 +19,9 @@ set(SUPPORTED_VARIANTS
     "11_5"
 )
 
-# Check to see if the variant specified is in the list
-add_subdirectory(11_2_function_overload_differentiation)
-add_subdirectory(11_4_deleting_functions)
-add_subdirectory(11_5_default_arguments)
+if (BUILD_VARIANT IN_LIST SUPPORTED_VARIANTS)
+    # Check to see if the variant specified is in the list
+    add_subdirectory(11_2_function_overload_differentiation)
+    add_subdirectory(11_4_deleting_functions)
+    add_subdirectory(11_5_default_arguments)
+endif()

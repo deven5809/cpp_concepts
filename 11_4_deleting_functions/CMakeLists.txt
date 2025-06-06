@@ -12,11 +12,23 @@ project(11_4_deleting_functions
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Set the executable name and target name.
+set(EXECUTABLE_NAME ${PROJECT_NAME})
+set(EXECUTABLE_TARGET ${EXECUTABLE_NAME}_exe)
+
 # Add source files here
 add_library(${PROJECT_NAME}
     main.cpp
 )
 
-add_executable(deleting_functions
+add_executable(${EXECUTABLE_TARGET}
     main.cpp
+)
+
+# This is a custom build command to move the executable to a common location
+# after the build is completed for conveniences sake.
+add_custom_command(TARGET ${EXECUTABLE_TARGET} POST_BUILD
+    # Create a folder specifically for the executable and move it there. 
+    COMMAND mkdir -p ${PROJECT_BINARY_DIR}/../executables/
+    COMMAND cp ${PROJECT_BINARY_DIR}/${EXECUTABLE_TARGET} ${PROJECT_BINARY_DIR}/../executables/
 )
