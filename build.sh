@@ -6,5 +6,8 @@ if [ ! -d "out" ]; then
 fi
 cd out
 
-# Build the program
-g++ -o main ./../main.cpp -g
+# Run CMake to generate a build system.
+cmake ../
+
+# Perform the build.
+cmake --build .
