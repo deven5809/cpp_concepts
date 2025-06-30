@@ -8,17 +8,27 @@
  */
 #include <iostream>
 
-
 /**
  * @brief This is a basic templated add function that will be 'instantiated' to
  * an actual function if it is needed. The type 'T' is a stand in for whatever
  * type might be needed.
+ * 
+ * @note Function template parameters can also have default values, but in this
+ * case the type is now explicitly declared.
  */
 template <typename T>
 T add(const T a, const T b)
 {
     return a + b;
 }
+
+/**
+ * @brief This deletion tells the compiler to throw an error if a function call
+ * is matched to this signature. This is a way of disallowing auto generating
+ * functions that would cause errors or otherwise fail.
+ */
+template <>
+std::string add(std::string a, std::string b) = delete;
 
 int main()
 {
