@@ -79,6 +79,21 @@ auto max(T x, U y) -> std::common_type_t<T, U>
 }
 #endif // AUTO_MAX_FUNCTION
 
+// This section demonstrates abbreviated function templates as introduced in 
+// C++20. 
+
+/**
+ * @brief This is equivalent to a templated verion of the max function seen 
+ * above. This should be used in place of templated functions where parameter
+ * types can be distinct. This format has no way to enforce the rule that the
+ * types be the same and so the traditional templating format should be used if 
+ * this is desired.
+ */
+auto max_abbr(auto x, auto y)
+{
+    return (x < y) ? y : x;
+}
+
 int main()
 {
     // We can now use the 'add' function to add any types for which the add 
@@ -118,4 +133,9 @@ int main()
     // These are workarounds though, and another way to solve this problem is to
     // create a template that allows for multiple types to begin with. Uncomment
     // AUTO_MAX_FUNCTION above to see how this can be done.
+
+    // This is a demonstration of the abbreviated templating format supported in 
+    // C++20 and beyond. Note that it cannot enforce the usage of a single type
+    // parameter.
+    std::cout << "The max of 3 and 2.3 is " << max_abbr(3, 2.3) << std::endl;
 }
