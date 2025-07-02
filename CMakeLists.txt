@@ -5,9 +5,6 @@ project(cpp_concepts
     VERSION 1.0
     LANGUAGES CXX)
 
-# Add CXX version/standard here. We'll be using C++ 23.
-set(CMAKE_CXX_STANDARD 23)
-
 # Build Arguments
 # cmake -DBUILD_VARIANT:STRING=all
 SET(BUILD_VARIANT "11_2" CACHE STRING "Defines which examples to build")
@@ -25,4 +22,5 @@ if (BUILD_VARIANT IN_LIST SUPPORTED_VARIANTS)
     add_subdirectory(11_4_deleting_functions)
     add_subdirectory(11_5_default_arguments)
     add_subdirectory(11_6_function_templates)
+    add_subdirectory(11_9_non_type_template_parameters)
 endif()
